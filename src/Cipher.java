@@ -7,6 +7,7 @@ public class Cipher {
 
   private char[] alphabet;
   public Cipher(char[] alphabet) {
+    System.out.println("tes");
     this.alphabet = alphabet;
   }
   public String encrypt(String text, int shift) {
