@@ -1,4 +1,4 @@
-package src;
+package src.validations;
 
 public class Validator {
   public boolean isValidKey(int key, char[] alphabet) {
