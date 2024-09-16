@@ -1,8 +1,12 @@
-package src;
+package src.cipher;
 
 public class CaesarCipher {
+
   // Alphabet
-  private static final String ALPHABET = "our alphabet will be here";
+  //private static final String ALPHABET = "our alphabet will be here";
+  private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з',
+      'и','к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
+      'ъ', 'ы', 'ь', 'э', 'я', '.', ',', '«', '»', '"', '\'', ':', '!', '?', ' '};
 
   // Methods for encryption, decryption, brute force, statistical analysis
 
@@ -39,3 +43,4 @@ public class CaesarCipher {
     // cipher.encrypt("input.txt", "output.txt", 3);;
   }
 }
+

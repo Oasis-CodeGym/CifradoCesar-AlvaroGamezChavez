@@ -1,8 +1,8 @@
-package src;
+package src.force;
 
 public class BruteForce {
   public String decryptByBruteForce(String encryptedText, char[] alphabet) {
     // Brute force logic
-    return encryptedText;
+    return null;
   }
 }
