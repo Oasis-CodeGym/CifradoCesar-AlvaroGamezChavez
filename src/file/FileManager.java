@@ -1,23 +1,54 @@
 package src.file;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.nio.file.Files;                 // Files: Proporciona métodos estáticos para trabajar con ficheros y directorios (leer, escribir, copiar, borrar, etc.).
-import java.nio.file.Path;                  //Path: Representa la ruta a un fichero o directorio.
+import src.cipher.Cipher;
+import src.validations.Validator;
+
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.file.FileStore;
+import java.nio.file.Files;               //Files:Métodos estáticos para trabajar con archivos y directorios
+import java.nio.file.Path;                //Path:Ruta a un fichero o directorio.
 import java.nio.file.Paths;
-import  java.nio.charset.StandardCharsets;  // Charset: Representa la codificación de caracteres utilizada al leer/escribir ficheros de texto.
+import  java.nio.charset.StandardCharsets;//Charset: Codificación de caracteres utilizada al leer/escribir ficheros de texto.
 
 public class FileManager {
-  public String readFile(String filePath) {
-    // File reading logic
-    Path path = Paths.get(filePath);
-    try {
-      byte[] byteFile = Files.readAllBytes(path);
+  public FileManager(){};
 
-//    if(path.)
-    }catch (IOException e){
-      System.out.println(e.getMessage());
+  Validator validator = new Validator();
+
+  public String readFile(String filePath) throws IOException {
+    // File reading logic
+    if(!validator.isFileExists(filePath))
+      throw new IOException("No se encontró el archivo, favor de revisar");
+
+    //cargar archivo
+    //https://codegym.cc/quests/lectures/es.cgu.module1.lecture42
+    try(
+        RandomAccessFile randomAccessFile = new RandomAccessFile(filePath, "rw");
+        FileChannel fileChannel = randomAccessFile.getChannel();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Channels.newInputStream(fileChannel), StandardCharsets.UTF_8))
+    ){//Según tengo entendido se cierra solo, no hace falta cerrar nada
+      StringBuilder loadText = new StringBuilder();
+      String line;
+
+      while ((line = bufferedReader.readLine()) != null){
+        loadText.append(line);
+      }
+      //con el texto extraido a enciptarlo
+
+      System.out.println(loadText);
+      return loadText.toString();
+    }catch (FileNotFoundException fnfe){//excepción cuando no hay archivo encontrado
+      fnfe.printStackTrace();
+    }catch (IOException ioe){//excepción para escritura de archivo
+      ioe.printStackTrace();
     }
+//    finally {
+//
+//    }
+
     return null;
   }
   public void writeFile(String content, String filePath) {
