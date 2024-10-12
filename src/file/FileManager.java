@@ -45,9 +45,9 @@ public class FileManager {
     }catch (IOException ioe){//excepción para escritura de archivo
       ioe.printStackTrace();
     }
-//    finally {
-//
-//    }
+    finally {
+      System.out.println("test");
+    }
 
     return null;
   }
