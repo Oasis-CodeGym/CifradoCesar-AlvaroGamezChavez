@@ -1,16 +1,11 @@
 package src.file;
 
-import src.cipher.Cipher;
 import src.validations.Validator;
 
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
-import java.nio.file.FileStore;
-import java.nio.file.Files;               //Files:Métodos estáticos para trabajar con archivos y directorios
-import java.nio.file.Path;                //Path:Ruta a un fichero o directorio.
-import java.nio.file.Paths;
 import  java.nio.charset.StandardCharsets;//Charset: Codificación de caracteres utilizada al leer/escribir ficheros de texto.
 
 public class FileManager {
@@ -36,7 +31,6 @@ public class FileManager {
       while ((line = bufferedReader.readLine()) != null){
         loadText.append(line);
       }
-      //con el texto extraido a enciptarlo
 
       System.out.println(loadText);
       return loadText.toString();
@@ -45,13 +39,27 @@ public class FileManager {
     }catch (IOException ioe){//excepción para escritura de archivo
       ioe.printStackTrace();
     }
-    finally {
-      System.out.println("test");
-    }
 
     return null;
   }
-  public void writeFile(String content, String filePath) {
-    // Logic for writing a file
+  public void writeFile(String content, String filePath) throws IOException {
+    // Logic for writing a file //https://codegym.cc/quests/lectures/es.cgu.module1.lecture42
+    if(!validator.isFileExists(filePath)){
+      //throw new FileAlreadyExistsException("El archivo existe");
+    }
+
+    try(
+        RandomAccessFile randomAccessFile = new RandomAccessFile(filePath, "rw");
+        FileChannel fileChannel = randomAccessFile.getChannel();
+    ){
+      ByteBuffer byteBuffer = ByteBuffer.allocate(content.getBytes().length);
+      byteBuffer.put(content.getBytes());
+      byteBuffer.flip();
+      fileChannel.write(byteBuffer);
+    } catch (FileNotFoundException fnfe) {
+      System.out.println(fnfe.getMessage());;
+    } catch (IOException e) {
+      System.out.print(e);
+    }
   }
 }

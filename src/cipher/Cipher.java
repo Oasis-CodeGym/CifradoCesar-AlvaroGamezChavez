@@ -1,5 +1,7 @@
 package src.cipher;
 
+import src.file.FileHandler;
+import src.file.FileManager;
 import src.validations.Validator;
 
 import java.util.ArrayList;
@@ -49,8 +51,11 @@ public class Cipher {
         cipherText.append(character);
 
     }
+    FileManager fileManager = new FileManager();
+    fileManager.writeFile(cipherText.toString(), "encrypt.txt");
     return cipherText.toString();
   }
+
   public String decrypt(String encryptedText, int shift) {
     // Decryption logic
     //return null;
