@@ -1,9 +1,7 @@
 package src.menu;
-
-/*import org.w3c.dom.ls.LSOutput;
-import src.cipher.CaesarCipher;*/
 import src.cipher.Cipher;
 import src.file.FileManager;
+import src.utilities.Utilities;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -28,10 +26,9 @@ public class Menu {
       System.out.println("B.- Leer desde teclado (ingresar texto/encriptar/desencriptar)");
       System.out.println("C.- Encriptar contenido y Crear archivo con contenido encriptado");
       System.out.println("D.- Desencriptar archivo");
-      /* System.out.println("E.- Desencriptar archivo con fuerza bruta");
-      System.out.println("F.- Desencriptar archivo con análisis estadístico");*/
       System.out.println("X.- Salir");
       option = teclado.nextLine().toLowerCase();
+      Utilities.twoJumps();
 
       switch (option) {
         case "a" -> {
@@ -39,6 +36,7 @@ public class Menu {
           filePath = teclado.nextLine();
           System.out.println("Ingresar número clave");
           keyNumber = teclado.nextByte();
+          Utilities.twoJumps();
 
           try {
             cipher.encrypt(fileManager.readFile(filePath), keyNumber);
@@ -47,6 +45,8 @@ public class Menu {
             throw new RuntimeException(e.getMessage());
           } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+          }finally {
+            Utilities.twoJumps();
           }
 
         }
@@ -55,6 +55,7 @@ public class Menu {
           text = teclado.nextLine();
           System.out.println("Ingresar número clave");
           keyNumber = teclado.nextInt();
+          Utilities.twoJumps();
 
           try {
             encryptedText = cipher.encrypt(text, keyNumber);
@@ -63,6 +64,8 @@ public class Menu {
             System.out.println(decryptedText);
           } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+          }finally {
+            Utilities.twoJumps();
           }
         }
         case "c" -> {
@@ -73,6 +76,8 @@ public class Menu {
             fileManager.writeFile(content,"encrytedFile.txt");
           } catch (Exception e) {
             throw new RuntimeException(e);
+          }finally {
+            Utilities.twoJumps();
           }
         }
         case "d" -> {
@@ -84,12 +89,12 @@ public class Menu {
             fileManager.writeFile(decryptedText, "decryptedFile.txt");
           } catch (Exception e) {
             System.out.println(e.getMessage());
+          }finally {
+            Utilities.twoJumps();
           }
         }
-        /*case "e" -> System.out.println("Desensecriptar archivo");
-        case "f" -> System.out.println("Desensecriptar por fuerza bruta");*/
         case "x" -> System.out.println("baigon");
-        default -> System.out.println("Solo letras de la 'A' a la 'F', 'X' para salir");
+        default -> System.out.println("Solo letras de la 'A' a la 'D', 'X' para salir");
       }
 
     }
