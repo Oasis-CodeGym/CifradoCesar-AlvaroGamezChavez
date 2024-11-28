@@ -1,12 +1,10 @@
 package src.utilities;
 
 import src.file.FileManager;
-import src.validations.Validator;
 
 import java.io.IOException;
 
 public class Utilities {
-  Validator validator = new Validator();
 
   public static void createPropertiesFile(int scrolling) throws IOException {
     FileManager fileManager = new FileManager();
